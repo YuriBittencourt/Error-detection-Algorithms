@@ -4,8 +4,11 @@ def parity(n):
     return "1"
 
 
-def to_bin(letter):
+def char_to_bin(letter):
     return bin(ord(letter))[2:]
+
+def int_to_bin(number,size):
+    return bin(letter)[2:].zfill(size)
 
 
 def to_ascii(binary):
