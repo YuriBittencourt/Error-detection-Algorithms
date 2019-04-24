@@ -1,10 +1,5 @@
 import sys
-
-
-def paridade(n):
-    if n.count("1") % 2 == 0:
-        return "0"
-    return "1"
+import utils
 
 
 def get_n(n, str_lst):
@@ -16,13 +11,19 @@ def get_n(n, str_lst):
 text = "redes"
 lst = []
 for letter in text:
-    binario = bin(ord(letter))
-    lst.append(binario[2:] + paridade(binario[2:]))
+    binario = utils.to_bin(letter)
+    lst.append(binario + utils.paridade(binario))
 
 parity = ""
 for i in range(0,8):
-    parity += paridade(get_n(i, lst))
+    parity += utils.paridade(get_n(i, lst))
 
 lst.append(parity)
 print(lst)
 
+
+#if(sys.argv[1] == '-e'):
+#    '''ENCODE'''
+
+#if(sys.argv[1] == '-d'):
+#    '''DECODE'''
