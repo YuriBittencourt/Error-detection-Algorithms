@@ -3,16 +3,18 @@ import sys
 import utils
 
 
-def get_n(n, str_lst):
+#Pega a coluna n de str_lst.
+def get_col(n, str_lst):
     new_str = ""
     for item in str_lst:
         new_str += item[n]
     return new_str
 
+
 #Recebe String de texto e retorna a codificacao BCC correspondente
 def encode(text):
     #transforma texto em binario
-    bin_list = list(map(utils.to_bin, text))
+    bin_list = [utils.char_to_bin(c, 7) for c in text]
 
     #adiciona o bit de paridade em cada letra que são 7 bits
     for i in range(0, len(bin_list)):
@@ -23,13 +25,15 @@ def encode(text):
     #           10111010
     #paridade   01100110
     parity=""
-    print(bin_list)
     for i in range(0, 8):
-        parity += utils.parity(get_n(i, bin_list))
-        print(parity)
+        parity += utils.parity(get_col(i, bin_list))
 
+    #Ler cada String de 8bits da lista e converter em hexadecimal e guardar na resultString.
+    resultString = ""
+    for b in bin_list:
+        resultString += utils.bin_to_hex(b)
 
-    return 0
+    return resultString
 
 
 def decode(text):
