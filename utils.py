@@ -22,3 +22,6 @@ def bin_to_ascii(binary):
 
 def bin_to_hex(binary):
     return hex(int(binary, 2))[2:]
+
+def bin_to_int(binary):
+	return int(binary,2)
