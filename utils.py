@@ -16,7 +16,7 @@ def hex_to_bin(number, padding):
     return bin(int(number, 16))[2:].zfill(padding)
 
 
-def to_ascii(binary):
+def bin_to_ascii(binary):
     return chr(int(binary, 2))
 
 
