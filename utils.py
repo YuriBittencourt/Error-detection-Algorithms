@@ -1,4 +1,4 @@
-def paridade(n):
+def parity(n):
     if n.count("1") % 2 == 0:
         return "0"
     return "1"
@@ -13,4 +13,4 @@ def to_ascii(binary):
 
 
 def bin_to_hex(binary):
-    return hex(int(binary, 2))
+    return hex(int(binary, 2))[2:]
