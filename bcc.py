@@ -24,9 +24,11 @@ def encode(text):
     # ex         11011100
     #            10111010
     # paridade   01100110
-    parity=""
+    parity = ""
     for i in range(0, 8):
         parity += utils.parity(get_col(i, bin_list))
+
+    bin_list.append(parity)
 
     # Ler cada String de 8bits da lista e converter em hexadecimal e guardar na resultString.
     result_string = ""
@@ -43,20 +45,19 @@ def decode(text):
 
     # Checar se as paridades batem
     for b in bin_list:
-        if utils.parity(b[:-1]) != b[-1:]:
+        if utils.parity(b[:-1]) != b[-1]:
             return "ERRO"
 
     # Checar paridade das colunas
     for i in range(0, 8):
         binary_col = get_col(i, bin_list)
-        if utils.parity(binary_col[:-1]) != binary_col[-1:]:
-            print(binary_col,)
+        if utils.parity(binary_col[:-1]) != binary_col[-1]:
             return "ERRO"
 
     # Não há erros, retornar a mensagem correta.
     result_string = ""
-    for b in bin_list:
-        result_string += utils.bin_to_ascii(b)
+    for b in bin_list[:-1]:
+        result_string += utils.bin_to_ascii(b[:-1])
 
     return result_string
 
