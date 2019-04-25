@@ -55,10 +55,14 @@ def decode_calc_hamming(binary):
     index_error = utils.bin_to_int("".join(xor_list))
     print(bin_inv)
     #trocando o bit errado
-    bin_inv[index_error-1] = '1' if bin_inv[index_error-1] == '0' else '0'
+    if index_error != 0:
+        bin_inv[index_error-1] = '1' if bin_inv[index_error-1] == '0' else '0'
     print(bin_inv)
     #removendo os bits adicionais
-    #TO DO
+    for i in list(__range_power2__(len(bin_inv)))[::-1]:
+        bin_inv.pop(i)
+    binary = "".join(bin_inv[::-1])
+    print(binary)
     return (utils.bin_to_ascii(binary), index_error)
     
 
@@ -85,5 +89,5 @@ def decode(string):
     print(erros)
 
 
-a = decode("69E")
+a = decode("37B")
 print(a)
