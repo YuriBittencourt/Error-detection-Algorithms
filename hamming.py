@@ -9,6 +9,15 @@ def __range_power2__(n):
         yield (2**i)-1
         i+=1 
 
+def __get_index_elemt_equals_one__(binary):
+    index_list = []
+    for i in range (len(binary)):
+        if binary[i] == "1":
+            # converter estes itens para binario
+            index_list.append(utils.int_to_bin(i+1,4))
+    return index_list
+
+
 def encode_calc_hamming(binary):
     # inverte o binario
     bin_inv = list(binary[::-1])
@@ -17,12 +26,7 @@ def encode_calc_hamming(binary):
     for i in range(len(bin_inv)):
         bin_inv.insert((2**i)-1,"0")
     # pegar os indices que possuem 1
-    index_list = []
-    for i in range (len(bin_inv)):
-        if bin_inv[i] == "1":
-             # converter estes itens para binario
-            index_list.append(utils.int_to_bin(i+1,4))
-
+    index_list = __get_index_elemt_equals_one__(bin_inv)
     # pega as colunas de bits
     xor_list = list(map(list,zip(*index_list)))
     # realizar a paridade entre os bits
@@ -40,29 +44,21 @@ def encode_calc_hamming(binary):
 def decode_calc_hamming(binary):
     # inverte o binario
     bin_inv = list(binary[::-1])
-
     # pegar os indices que possuem 1
-    index_list = []
-    for i in range (len(bin_inv)):
-        if bin_inv[i] == "1":
-             # converter estes itens para binario
-            index_list.append(utils.int_to_bin(i+1,4))
+    index_list = __get_index_elemt_equals_one__(bin_inv)
     # pega as colunas de bits
     xor_list = list(map(list,zip(*index_list)))
     # realizar a paridade entre os bits
     xor_list = list(map(utils.parity,xor_list))
     # indice errado
     index_error = utils.bin_to_int("".join(xor_list))
-    print(bin_inv)
     #trocando o bit errado
     if index_error != 0:
         bin_inv[index_error-1] = '1' if bin_inv[index_error-1] == '0' else '0'
-    print(bin_inv)
     #removendo os bits adicionais
     for i in list(__range_power2__(len(bin_inv)))[::-1]:
         bin_inv.pop(i)
     binary = "".join(bin_inv[::-1])
-    print(binary)
     return (utils.bin_to_ascii(binary), index_error)
     
 
@@ -73,21 +69,30 @@ def encode(string):
     for binary in bin_list:
         # de cada binario realizar o hamming
         message_encode += encode_calc_hamming(binary)
-    return message_encode.upper() 
+
+    print(message_encode.upper())
 
 def decode(string):
     # converter cada letra para binario
     bin_list = [utils.hex_to_bin(string[i:i+3], 11) for i in range(0,len(string),3) ]
-
     message = ""
     erros = []
     for binary in bin_list:
-        print(binary)
         letter, error = decode_calc_hamming(binary)
         message+=letter
-        erros.append((letter,error))
-    print(erros)
+        if error != 0:
+            erros.append((letter,error))
 
+    print(message)
+    for letter, error in erros:
+        print("ERRO no caractere {} -> Correção: {}".format(message.index(letter),letter))
 
-a = decode("37B")
-print(a)
+# codificação com problemas
+
+#853513047F8
+#E229B356
+#FC5366354FC7D530462C
+#853513047F8
+#9D2CE618
+#CE4B732E
+#857CB7B45312D063264A
