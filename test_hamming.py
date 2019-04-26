@@ -30,7 +30,7 @@ def file_test_decoding():
     read_data = list(map(lambda s: s.rstrip(),read_data))
     
     for data in read_data:
-        print(data+"aaa")
+        print(data+"aaaa")
         hamming.decode(data)
 
 def inject_problems():
@@ -42,12 +42,14 @@ def inject_problems():
 	read_data = list(map(lambda s: s.rstrip(),read_data))
 
 	for data in read_data:
+		print(data)
 		binary = utils.hex_to_bin(data,0)
 		binary = list(binary)
-		index_change = random.randint(0, len(binary)-1)
+		index_change = random.randint(1, len(binary)-1)
 		binary[index_change] = '1' if binary[index_change] == "0" else '0'
 		hexa = utils.bin_to_hex("".join(binary))
 		print(hexa.upper())
+		#print()
 
 if sys.argv[1] == '-i':
     inject_problems()
