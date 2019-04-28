@@ -35,7 +35,7 @@ def encode(text):
     for b in bin_list:
         result_string += utils.bin_to_hex(b)
 
-    return result_string
+    return result_string.upper()
 
 
 def decode(text):
@@ -45,6 +45,8 @@ def decode(text):
 
     # Checar se as paridades batem
     for b in bin_list:
+        print(b)
+        print(b[-1])
         if utils.parity(b[:-1]) != b[-1]:
             return "ERRO"
 
