@@ -45,8 +45,6 @@ def decode(text):
 
     # Checar se as paridades batem
     for b in bin_list:
-        print(b)
-        print(b[-1])
         if utils.parity(b[:-1]) != b[-1]:
             return "ERRO"
 
