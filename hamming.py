@@ -1,28 +1,44 @@
 import utils
 import sys
 
-# n = limite superior
-# -1 pois como no hamming se trabalha com indices de 1...n
-# e no python de 0...n necessita fazer esta adaptacao
+"""
+ Metodo que cria um gerador de potencia de 2 inferior ao 
+ valor de n
+
+n = limite superior
+-1 pois como no hamming se trabalha com indices de 1...n
+ e no python de 0...n necessita fazer esta adaptacao
+"""
 def __range_power2__(n):
     i = 0
     while (2**i)-1 <= n:
         yield (2**i)-1
         i+=1 
 
+"""
+Metodo que retorna uma lista com indices dos elementos 
+que possuem valores iguais a 1
+"""
 def __get_index_elemt_equals_one__(binary):
     index_list = []
     for i in range (len(binary)):
         if binary[i] == "1":
-            # converter estes itens para binario
             index_list.append(utils.int_to_bin(i+1,4))
+
     return index_list
 
-
+"""
+Metodo que realiza o calculo de codificacao de hamming
+ou seja recebe um sequencia binária, inverte para ter os indices
+corretos do algoritmo (0...n), para cada posicao potencia 2 colocar
+valores igual a zero para no futuro preenche-las. Realiza-se o xor
+(paridade) dos indices que possuem valor igual a 1 e assim se coloca
+este bit's gerados nas posicoes de potencia 2, no final retorna o binario
+com estes novos bit's.
+"""
 def encode_calc_hamming(binary):
     # inverte o binario
     bin_inv = list(binary[::-1])
-    #print(len(bin_inv))
     # para cada elemento 2^1 colocar 0
     for i in range(len(bin_inv)):
         bin_inv.insert((2**i)-1,"0")
@@ -41,11 +57,17 @@ def encode_calc_hamming(binary):
     return utils.bin_to_hex("".join(bin_inv[::-1]))
 
     
-
+"""
+Metodo que realiza o calculo de decoficacao de hamming
+ou seja recebe um sequencia binária, inverte para ter os indices
+corretos do algoritmo (0...n). Realiza-se o xor (paridade) dos indices que 
+possuem valor igual a 1 e se este valor gerado for diferente de zero entao
+ha bit errado, realiza-se a troca deste bit, remove os bit's dos indices que
+sao potencia 2 e retorna o caractere e o valor de erro.
+"""
 def decode_calc_hamming(binary):
     # inverte o binario
     bin_inv = list(binary[::-1])
-    #print(len(bin_inv))
     # pegar os indices que possuem 1
     index_list = __get_index_elemt_equals_one__(bin_inv)
     # pega as colunas de bits
@@ -57,13 +79,17 @@ def decode_calc_hamming(binary):
     #trocando o bit errado
     if index_error != 0:
         bin_inv[index_error-1] = '1' if bin_inv[index_error-1] == '0' else '0'
-    #removendo os bits adicionais
+    #remove os bits adicionais
     for i in list(__range_power2__(len(bin_inv)))[::-1]:
         bin_inv.pop(i)
     binary = "".join(bin_inv[::-1])
     return (utils.bin_to_ascii(binary), index_error)
     
 
+"""
+Metodo no qual realiza a codificao para cada caractere da string
+retorna uma string em hexa com a codificacao.
+"""
 def encode(string):
     # converter cada letra para binario
     bin_list = [utils.char_to_bin(letter, 8) for letter in string]
@@ -74,6 +100,10 @@ def encode(string):
 
     return message_encode.upper()
 
+"""
+Metodo no qual realiza a decodificao de cada par de hexa, retorna 
+a messagem decodificada e os erros encontrados.
+"""
 def decode(string):
     # converter cada letra para binario
     bin_list = [utils.hex_to_bin(string[i:i+3], 11) for i in range(0,len(string),3) ]
@@ -86,24 +116,6 @@ def decode(string):
             erros.append((letter,error))
 
     return {'message':message, 'erros': erros}
-"""
-encode("maxprint celular telefone 1928312 ,. ! # awidd")
-print(utils.hex_to_bin("6676067CB78079964D6797AA28261F62C6607AD6606067992827AA62C66062C63267E67962C28230434F31A34831D30431A2822E32FA28228528229C2826067B464D62B62B",0))
-decode("6676067CB78079964D6797AA28261F62C6607AD6606067992827AA62C66062C63267E67962C28230434F31A34831D30431A2822E32FA28228528229C2826067B464D62B62B")
-for i in range (0,len(b)):
-    aux = b[:]
-    aux[i] = '1' if aux[i] == '0' else '0'
-    string = "".join(aux)
-    decode(utils.bin_to_hex(string))
-"""
-# codificação com problemas
-#853513047F8
-#E229B356
-#FC5366354FC7D530462C
-#853513047F8
-#9D2CE618
-#CE4B732E
-#857CB7B45312D063264A
 
 if sys.argv[1] == '-e':
     print(encode(sys.argv[2]))
