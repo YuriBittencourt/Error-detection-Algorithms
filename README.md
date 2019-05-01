@@ -1,6 +1,5 @@
 # Trabalho 1 - Descrição
-O objetivo do trabalho consiste em implementar codificadores e decodificadores para detecção e correção de erros usando as técnicas de redundância de bloco, CRC e código de Hamming. Os codificadores e decodificadores deverão ser executados em linha de comando recebendo parâmetros de entrada e apresentando o resultado na saída padrão do terminal (OBS. NÃO devem ser utilizados menus, entradas/saídas por arquivos, ou interface gráfica). Os detalhes sobre a entrada e saída para cada técnica estão apresentados abaixo:
-
+O objetivo do trabalho consiste em implementar codificadores e decodificadores para detecção e correção de erros usando as técnicas de redundância de bloco, CRC e código de Hamming. Os codificadores e decodificadores deverão ser executados em linha de comando recebendo parâmetros de entrada e apresentando o resultado na saída padrão do terminal.
 ## Versão do Python
 Python 3.6.5 :: Anaconda, Inc.
 
@@ -46,11 +45,13 @@ Python 3.6.5 :: Anaconda, Inc.
   ### Codificador: 
     <string em ASCII> => <string codificada em hexadecimal>
 O Codificador consiste em receber uma string em ASCII e para cada elemento desta string é realizado a codificação em binário com 8 bits. Logo após isso, para cada binário é executada a codificação onde: 
-1. Aloca os espaços no binário para os indices de potência 2 (2^0, 2^1, 2^2...2^n), desta forma o o binário terá 11 bits.
-
+1. Aloca os espaços no binário para os indices de potência 2 ![image](https://latex.codecogs.com/gif.latex?(2^{0},&space;2^{1},&space;2^{2}...2^{n})), desta forma o o binário terá 11 bits.
+![image](https://user-images.githubusercontent.com/21231029/57020440-a3c5ea00-6bff-11e9-80f1-ced109437164.png)
 2. Para cada indice que possue bit igual a 1 é a realizado a conversão em binário.
-3. Executa a operação xor (paridade) entre cada bit dos binários.
+3. Executa a operação xor (paridade) entre cada bit dos binários.<br>
+![image](https://user-images.githubusercontent.com/21231029/57020462-afb1ac00-6bff-11e9-89e5-fd8dbecbd419.png)
 4. Para cada bit gerado é colocado no binário de 11 bits seu devido valor e na sua posição de potência de 2.
+![image](https://user-images.githubusercontent.com/21231029/57020464-b3453300-6bff-11e9-96dd-dd829f4a57ee.png)
 5. retorna este binário (11 bits) gerado em hexadecimal.
   #### Exemplo:
   ```
