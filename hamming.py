@@ -117,12 +117,13 @@ def decode(string):
 
     return {'message':message, 'erros': erros}
 
-if sys.argv[1] == '-e':
-    string = " ".join(sys.argv[2:])
-    print(encode(string))
+if __name__ == '__main__':
+    if sys.argv[1] == '-e':
+        string = " ".join(sys.argv[2:])
+        print(encode(string))
 
-if sys.argv[1] == '-d':
-    dec = decode(sys.argv[2])
-    print(dec['message'])
-    for letter, error in dec['erros']:
-        print("ERRO no caractere {} -> Correção: {}".format(dec['message'].index(letter)+1,letter))
+    if sys.argv[1] == '-d':
+        dec = decode(sys.argv[2])
+        print(dec['message'])
+        for letter, error in dec['erros']:
+            print("ERRO no caractere {} -> Correção: {}".format(dec['message'].index(letter)+1,letter))
