@@ -58,7 +58,7 @@ def encode_calc_hamming(binary):
 
     
 """
-Metodo que realiza o calculo de decoficacao de hamming
+Metodo que realiza o calculo de decodificacao de hamming
 ou seja recebe um sequencia binária, inverte para ter os indices
 corretos do algoritmo (0...n). Realiza-se o xor (paridade) dos indices que 
 possuem valor igual a 1 e se este valor gerado for diferente de zero entao
@@ -106,7 +106,7 @@ a messagem decodificada e os erros encontrados.
 """
 def decode(string):
     # converter cada letra para binario
-    bin_list = [utils.hex_to_bin(string[i:i+3], 11) for i in range(0,len(string),3) ]
+    bin_list = [utils.hex_to_bin(string[i:i+3], 8) for i in range(0,len(string),3) ]
     message = ""
     erros = []
     for binary in bin_list:
