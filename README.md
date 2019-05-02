@@ -45,13 +45,13 @@ Python 3.6.5 :: Anaconda, Inc.
   ### Codificador: 
     <string em ASCII> => <string codificada em hexadecimal>
 O Codificador consiste em receber uma string em ASCII e para cada elemento desta string é realizado a codificação em binário com 8 bits. Logo após isso, para cada binário é executada a codificação onde: 
-1. Aloca os espaços no binário para os indices de potência 2 ![image](https://latex.codecogs.com/gif.latex?(2^{0},&space;2^{1},&space;2^{2}...2^{n})), desta forma o o binário terá 11 bits.
-![image](https://user-images.githubusercontent.com/21231029/57020440-a3c5ea00-6bff-11e9-80f1-ced109437164.png)
+1. Aloca os espaços no binário para os indices de potência 2 ![potencia_de_dois](https://latex.codecogs.com/gif.latex?(2^{0},&space;2^{1},&space;2^{2}...2^{n})), desta forma o o binário terá 11 bits.
+![binario_11_bits](https://user-images.githubusercontent.com/21231029/57020440-a3c5ea00-6bff-11e9-80f1-ced109437164.png)
 2. Para cada indice que possue bit igual a 1 é a realizado a conversão em binário.
 3. Executa a operação xor (paridade) entre cada bit dos binários.<br>
-![image](https://user-images.githubusercontent.com/21231029/57020462-afb1ac00-6bff-11e9-89e5-fd8dbecbd419.png)
+![tabela_xor](https://user-images.githubusercontent.com/21231029/57020462-afb1ac00-6bff-11e9-89e5-fd8dbecbd419.png)
 4. Para cada bit gerado é colocado no binário de 11 bits seu devido valor e na sua posição de potência de 2.
-![image](https://user-images.githubusercontent.com/21231029/57020464-b3453300-6bff-11e9-96dd-dd829f4a57ee.png)
+![mensagem_final](https://user-images.githubusercontent.com/21231029/57020464-b3453300-6bff-11e9-96dd-dd829f4a57ee.png)
 5. retorna este binário (11 bits) gerado em hexadecimal.
   #### Exemplo:
   ```
@@ -64,8 +64,13 @@ O Codificador consiste em receber uma string em ASCII e para cada elemento desta
   ```
   ### Decodificador: 
     <código em hexadecimal> => <string em ASCII> 
-  
-  (OBS. os caracteres que apresentarem erro deverão ser corrigidos e sua correção indicada na saída)
+  O decodificador consite em receber uma string em HEXADECIMAL e para cada 3 caracteres desta String é realizado a conversão para binário. Logo após isso, para cada binário é executada a decodificação onde:
+  1. Para cada indice que possue bit igual a 1 é a realizado a conversão em binário.
+  2. Executa a operação xor (paridade) entre cada bit dos binários.
+  3. converte o valor do xor para inteiro e verifica se é igual a zero. Se for então a string não tem erro, caso contrário arruma-se o erro (trocando o valor do bit naquele indice) no binário inicial.
+  ![tabela_xor_com_problemas](https://user-images.githubusercontent.com/21231029/57110310-80d62b80-6d0e-11e9-9dc9-951f623473b5.png)
+  4. Remove os bits dos indices de potência 2 ![potencia_de_dois](https://latex.codecogs.com/gif.latex?(2^{0},&space;2^{1},&space;2^{2}...2^{n})) do binário inicial.
+  5. Converte este binário para ASCII.
   #### Exemplo:
   ```
   $ python hamming.py -d 79962C62B62C79E
