@@ -106,7 +106,7 @@ a messagem decodificada e os erros encontrados.
 """
 def decode(string):
     # converter cada letra para binario
-    bin_list = [utils.hex_to_bin(string[i:i+3], 8) for i in range(0,len(string),3) ]
+    bin_list = [utils.hex_to_bin(string[i:i+3], 11) for i in range(0,len(string),3) ]
     message = ""
     erros = []
     for binary in bin_list:
@@ -118,7 +118,8 @@ def decode(string):
     return {'message':message, 'erros': erros}
 
 if sys.argv[1] == '-e':
-    print(encode(sys.argv[2]))
+    string = " ".join(sys.argv[2:])
+    print(encode(string))
 
 if sys.argv[1] == '-d':
     dec = decode(sys.argv[2])
