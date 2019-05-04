@@ -36,8 +36,15 @@ Python 3.6.5 :: Anaconda, Inc.
 
   ### Codificador: 
     <string em ASCII> <polinômio gerador de ordem 5 expresso em binário> => <string codificada em hexadecimal>
+  O Codificador consiste em receber uma string em ASCII e para cada elemento desta string é realizado a codificação em binário com 12 bits. Logo após isso, para cada binário é executada a codificação onde, realiza-se divisões sucessivas do binário em que se o primeiro bit do binário for igual a 1  então a divisão deve ser realizada através do polinomio caso contrário através do binário 0 sucessivamente, no final é adicionado este resultado no lugar dos ultimos 4 bits do binário inicial e logo após isso este binário é convertido para hexadecimal.
+  
+  ![codificacao_crc](https://user-images.githubusercontent.com/21231029/57184960-fb7f8200-6e99-11e9-9ff4-2f8f7ecb3ee2.png)
+  
   ### Decodificador: 
-    <string em hexadecimal> <polinômio gerador de ordem 5 em binário> => <string em ASCII> e/ou "ERRO" 
+    <string em hexadecimal> <polinômio gerador de ordem 5 em binário> => <string em ASCII> e/ou "ERRO"
+  O decodificador consite em receber uma string em HEXADECIMAL e para cada 3 caracteres desta String é realizado a conversão para binário. Logo após isso, para cada binário é executada a decodificação onde, realiza-se divisões sucessivas do binário em que se o primeiro bit do binário for igual a 1  então a divisão deve ser realizada através do polinomio caso contrário através do binário 0 sucessivamente, no final se o resultado da divisão for igual a zero então não houve erro, caso contrário houve.
+  ![decodificacao_crc](https://user-images.githubusercontent.com/21231029/57185105-d12ec400-6e9b-11e9-9943-002b07062d98.png)
+
   (OBS. os caracteres sem erro devem ser apresentados e indicados os caracteres que tiveram erro na transmissão)
 
 ## 3. Código de Hamming
