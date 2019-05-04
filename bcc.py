@@ -65,11 +65,13 @@ def decode(text):
     return result_string
 
 
-# se o usuário executar python bcc.py -e string, executa o encode dessa string
-if sys.argv[1] == '-e':
-    print(encode(sys.argv[2]))
+if __name__ == "__main__":
+    # se o usuário executar python bcc.py -e string, executa o encode dessa string
+    if sys.argv[1] == '-e':
+        string = " ".join(sys.argv[2:])
+        print(encode(string))
 
-# se o usuário executar python bcc.py -d hexadecimal, executa o decode desse hexadecimal
-if sys.argv[1] == '-d':
-    print(decode(sys.argv[2]))
+    # se o usuário executar python bcc.py -d hexadecimal, executa o decode desse hexadecimal
+    if sys.argv[1] == '-d':
+        print(decode(sys.argv[2]))
 

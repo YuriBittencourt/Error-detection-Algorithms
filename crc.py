@@ -30,10 +30,12 @@ def encode(text, polynomial):
         bin_list[i] = calculate_crc(bin_list[i] + "".zfill(len(polynomial)),  polynomial)
 
 
-# se o usuário executar python crc.py -e string polinomio_gerador, executa o encode dessa string
-if sys.argv[1] == '-e':
-    print(encode(sys.argv[2], sys.argv[3]))
+if __name__ == "__main__":
+    # se o usuário executar python crc.py -e string polinomio_gerador, executa o encode dessa string
+    if sys.argv[1] == '-e':
+        string = " ".join(sys.argv[2:-1])
+        print(encode(string, sys.argv[-1]))
 
-# se o usuário executar python crc.py -d hexadecimal polinomio gerador, executa o decode desse hexadecimal
-if sys.argv[1] == '-d':
-    print(decode(sys.argv[2], sys.argv[3]))
+    # se o usuário executar python crc.py -d hexadecimal polinomio gerador, executa o decode desse hexadecimal
+    if sys.argv[1] == '-d':
+        print(decode(sys.argv[2], sys.argv[3]))
