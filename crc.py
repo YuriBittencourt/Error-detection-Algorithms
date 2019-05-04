@@ -2,18 +2,40 @@
 import sys
 import utils
 
-
+"""
+Metodo que realiza as divisoes sucessivas de um binario 
+pelo polinimo, funciona tanto para codificacao quanto
+para decodificacao do CRC
+"""
 def calculate_crc(binary, polynomial):
-    # Procura o primeiro bit significativo
-    i = binary.find('1')
 
-    # Pega os bits do tamanho do polinômio e desloca o i para depois dele.
-    result = binary[i: i + len(polynomial)]
-    i += len(result)
+    # Pega os bits do tamanho do polinômio.
+    result = binary[: len(polynomial)]
 
-    while i < len(binary):
-        # Calcula
+    # indice do valor para ser deslocado para baixo para proxima divisao.
+    i = len(result)
+
+    while i <= len(binary):
+        # se o primeiro bit for igual a 1 necessita
+        # realizar a divisão pelo polinimo
+        if result[0] == "1":
+            # obtem os bits em forma das colunas
+            columns_bits = list(map(list,zip(result,polynomial)))
+            # realiza-se a divisao (paridade)
+            xor_list = list(map(utils.parity,columns_bits))[1:]
+            result = "".join(xor_list)
+        # senao realiza uma divisão com elemento neutro(0) o que
+        # resulta no próprio elemento
+        else:
+            result = result[1:]
+
+        if i < len(binary): # necessario para realizar mais um passo da divisao.
+                            # pois iria dar indice fora do alcance
+            result = result + binary[i]
+
+        # avanca para o proximo bit a ser deslocado para baixo
         i += 1
+
     return result
 
 def decode(text, polynomial):
@@ -31,6 +53,7 @@ def encode(text, polynomial):
 
 
 if __name__ == "__main__":
+
     # se o usuário executar python crc.py -e string polinomio_gerador, executa o encode dessa string
     if sys.argv[1] == '-e':
         string = " ".join(sys.argv[2:-1])
@@ -39,3 +62,4 @@ if __name__ == "__main__":
     # se o usuário executar python crc.py -d hexadecimal polinomio gerador, executa o decode desse hexadecimal
     if sys.argv[1] == '-d':
         print(decode(sys.argv[2], sys.argv[3]))
+    
