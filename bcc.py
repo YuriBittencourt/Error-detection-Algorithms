@@ -9,7 +9,7 @@ import utils
 
 
 """
-Metodo que a n-ésima coluna de bits de uma lista.
+Metodo que retorna a n-ésima coluna de bits de uma lista.
 """
 def get_col(n, str_lst):
     new_str = ""
