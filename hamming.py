@@ -1,13 +1,16 @@
+"""
+Autores: Vinicius Cerutti e Yuri Bittencourt
+Trabalho de Introdução a Redes de Computadores 2019/1
+"""
 import utils
 import sys
 
 """
- Metodo que cria um gerador de potencia de 2 inferior ao 
- valor de n
+Metodo que cria um gerador de potencia de 2 inferior ao valor de n
 
 n = limite superior
--1 pois como no hamming se trabalha com indices de 1...n
- e no python de 0...n necessita fazer esta adaptacao
+(2**i)-1 pois como no hamming se trabalha com indices de 1...n e no python 
+de 0...n necessita fazer esta adaptacao
 """
 def __range_power2__(n):
     i = 0
@@ -28,13 +31,12 @@ def __get_index_elemt_equals_one__(binary):
     return index_list
 
 """
-Metodo que realiza o calculo de codificacao de hamming
-ou seja recebe um sequencia binária, inverte para ter os indices
-corretos do algoritmo (0...n), para cada posicao potencia 2 colocar
-valores igual a zero para no futuro preenche-las. Realiza-se o xor
-(paridade) dos indices que possuem valor igual a 1 e assim se coloca
-este bit's gerados nas posicoes de potencia 2, no final retorna o binario
-com estes novos bit's.
+Metodo que realiza o calculo de codificacao de hamming ou seja recebe um 
+sequencia binaria, inverte para ter os indices corretos do algoritmo (0...n),
+para cada posicao potencia 2 colocar valores igual a zero para no futuro 
+preenche-las. Realiza o xor (paridade) dos indices que possuem valor igual 
+a 1 e assim se coloca este bit's gerados nas posicoes de potencia 2, no final 
+retorna o binario com estes novos bit's.
 """
 def encode_calc_hamming(binary):
     # inverte o binario
@@ -46,7 +48,7 @@ def encode_calc_hamming(binary):
     index_list = __get_index_elemt_equals_one__(bin_inv)
     # pega as colunas de bits
     xor_list = list(map(list,zip(*index_list)))
-    # realizar a paridade entre os bits
+    # realiza a paridade entre os bits
     xor_list = list(map(utils.parity,xor_list))[::-1]
 
     for i in range(len(xor_list)):
@@ -102,7 +104,7 @@ def encode(string):
 
 """
 Metodo no qual realiza a decodificao de cada par de hexa, retorna 
-a mensagem decodificada e os erros encontrados.
+a mensagem decodificada e os erros encontrados com a correcao.
 """
 def decode(string):
     # converter cada letra para binario
@@ -110,6 +112,7 @@ def decode(string):
     message = ""
     erros = []
     for binary in bin_list:
+        #decodifca o binario
         letter, error = decode_calc_hamming(binary)
         message+=letter
         if error != 0:
@@ -118,10 +121,15 @@ def decode(string):
     return {'message':message, 'erros': erros}
 
 if __name__ == '__main__':
+    # se o usuario executar python hamming.py -e string,executa o 
+    # encode dessa string
+
     if sys.argv[1] == '-e':
         string = " ".join(sys.argv[2:])
         print(encode(string))
 
+    # se o usuario executar python crc.py -d hexadecimal 
+    # executa o decode desse hexadecimal
     if sys.argv[1] == '-d':
         dec = decode(sys.argv[2])
         print(dec['message'])
