@@ -1,10 +1,15 @@
 # coding: utf-8
+"""
+Autores: Vinicius Cerutti e Yuri Bittencourt
+Trabalho de Introdução a Redes de Computadores 2019/1
+"""
+
 import sys
 import utils
 
 
 """
-Método que a n-ésima coluna de bits de uma lista.
+Metodo que a n-ésima coluna de bits de uma lista.
 """
 def get_col(n, str_lst):
     new_str = ""
@@ -21,7 +26,7 @@ def encode(text):
     # transforma texto em uma lista de strings de binario
     bin_list = [utils.char_to_bin(c, 7) for c in text]
 
-    # adiciona o bit de paridade em cada letra que são 7 bits
+    # adiciona o bit de paridade em cada letra que sao 7 bits
     for i in range(0, len(bin_list)):
         bin_list[i] += utils.parity(bin_list[i])
 
@@ -35,10 +40,9 @@ def encode(text):
 
     bin_list.append(parity)
 
-    # Ler cada String de 8bits da lista e converter em hexadecimal e guardar na resultString.
-    result_string = ""
-    for b in bin_list:
-        result_string += utils.bin_to_hex(b)
+    # Ler cada String de 8bits da lista e converter em hexadecimal
+    # e guardar na resultString.
+    result_string = "".join(list(map(utils.bin_to_hex, bin_list)))
 
     return result_string.upper()
 
@@ -48,18 +52,20 @@ Metodo no qual realiza a decodificao de cada par de hexa, retorna
 a mensagem decodificada.
 """
 def decode(text):
-    # Quebrar o text em strings binárias de 8bits
+    # Quebrar o text em strings binarias de 8bits
     block_size = 2
     bin_list = [utils.hex_to_bin(text[i:i + block_size], 8) for i in range(0, len(text), block_size)]
 
-    # Checar paridade das linhas (
-    # comparar a paridade de n-1 bits == ao n-ésimo bit, se diferente retorna ERRO
+    # Checar paridade das linhas
+    # comparar a paridade de n-1 bits == ao n-ésimo bit, se diferente 
+    # retorna ERRO
     for b in bin_list:
         if utils.parity(b[:-1]) != b[-1]:
             return "ERRO"
 
     # Checar paridade das colunas
-    # comparar a paridade das colunas para cada coluna comparar n-1 bits == ao n-ésimo bit, se diferente retorna ERRO
+    # comparar a paridade das colunas para cada coluna comparar n-1 bits == ao
+    #  n-ésimo bit, se diferente retorna ERRO
     for i in range(0, 8):
         binary_col = get_col(i, bin_list)
         if utils.parity(binary_col[:-1]) != binary_col[-1]:
@@ -67,6 +73,7 @@ def decode(text):
 
     # Não há erros, retornar a mensagem correta
     result_string = ""
+    
     for b in bin_list[:-1]:
         result_string += utils.bin_to_ascii(b[:-1])
 
@@ -74,12 +81,16 @@ def decode(text):
 
 
 if __name__ == "__main__":
-    # se o usuário executar python bcc.py -e string, executa o encode dessa string
+    # se o usuário executar python bcc.py -e string, executa o 
+    # encode dessa string
+
     if sys.argv[1] == '-e':
         string = " ".join(sys.argv[2:])
         print(encode(string))
 
-    # se o usuário executar python bcc.py -d hexadecimal, executa o decode desse hexadecimal
+    # se o usuário executar python bcc.py -d hexadecimal, executa
+    # o decode desse hexadecimal
+
     if sys.argv[1] == '-d':
         print(decode(sys.argv[2]))
 
