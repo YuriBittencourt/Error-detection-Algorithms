@@ -38,18 +38,54 @@ def calculate_crc(binary, polynomial):
 
     return result
 
+"""
+Metodo no qual realiza a decodificao de cada trio de hexadecimais, retorna 
+a mensagem decodificada e uma lista de índices de erros.
+"""
 def decode(text, polynomial):
-    pass
+    # Quebrar o texto hexadecimal em uma lista de  binário onde cada binário tem 12 bits (3 hexadecimais)
+    block_size = 3
+    bin_list = [utils.hex_to_bin(text[i:i + block_size], 8) for i in range(0, len(text), block_size)]
 
 
+    mensagem = ""
+    erros = []
+    # Calcular o CRC de cada caractere, se o resultado for diferente de 0 tem erro e deve ser guardada a posição.
+    # Caso contrário pegar os binários descontando os últimos 4 bits (o último hexadecimal e converter para ASCII.
+    for i in range(0,len(bin_list)):
+        if utils.bin_to_int(calculate_crc(bin_list[i], polynomial)) == 0:
+            mensagem += utils.bin_to_ascii(bin_list[i][:-4])
+
+        else:
+            mensagem += "_"
+            erros.append(str(i))
+
+    # retornar o dict com mensagem e eventuais erros
+    return {"message": mensagem, "erros": erros}
+
+
+"""
+Metodo no qual realiza a codificao para cada caractere da string
+retorna uma string em hexa com a codificacao.
+"""
 def encode(text, polynomial):
     # transforma texto em uma lista de strings de binario
     bin_list = [utils.char_to_bin(c, 7) for c in text]
-
+    print(bin_list)
     # adiciona o bit de paridade em cada letra que são 7 bits
     for i in range(0, len(bin_list)):
         # calcula crc de um caracter com n-1 0s concatenados à direita, onde n é o tamanho do polinômio gerador
-        bin_list[i] = calculate_crc(bin_list[i] + "".zfill(len(polynomial)),  polynomial)
+        bin_list[i] += calculate_crc(bin_list[i] + "".zfill(len(polynomial) - 1),  polynomial)
+
+        # converter para hexadecimal.
+        bin_list[i] = utils.bin_to_hex(bin_list[i])
+
+    # concatenar e retornar o resultado.
+    result = ""
+    for b in bin_list:
+        result+=b;
+
+    return result
 
 
 if __name__ == "__main__":
@@ -61,5 +97,9 @@ if __name__ == "__main__":
 
     # se o usuário executar python crc.py -d hexadecimal polinomio gerador, executa o decode desse hexadecimal
     if sys.argv[1] == '-d':
-        print(decode(sys.argv[2], sys.argv[3]))
-    
+        dec = decode(sys.argv[2], sys.argv[3])
+    print(dec['message'])
+
+    # se tiver erros, imprima os índices
+    if dec['erros']:
+        print("ERRO nos caracteres {}".format(', '.join(dec['erros'])))
