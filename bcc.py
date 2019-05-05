@@ -3,7 +3,9 @@ import sys
 import utils
 
 
-# Pega a coluna n de str_lst.
+"""
+Método que a n-ésima coluna de bits de uma lista.
+"""
 def get_col(n, str_lst):
     new_str = ""
     for item in str_lst:
@@ -11,7 +13,10 @@ def get_col(n, str_lst):
     return new_str
 
 
-# Recebe String de texto e retorna a codificacao BCC correspondente
+"""
+Metodo no qual realiza a codificao para cada caractere da string
+retorna uma string em hexa com a codificacao.
+"""
 def encode(text):
     # transforma texto em uma lista de strings de binario
     bin_list = [utils.char_to_bin(c, 7) for c in text]
@@ -38,7 +43,10 @@ def encode(text):
     return result_string.upper()
 
 
-# Recebe String de hexadecimal e retorna a decodificacao BCC correspondente
+"""
+Metodo no qual realiza a decodificao de cada par de hexa, retorna 
+a mensagem decodificada.
+"""
 def decode(text):
     # Quebrar o text em strings binárias de 8bits
     block_size = 2

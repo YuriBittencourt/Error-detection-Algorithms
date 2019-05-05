@@ -102,7 +102,7 @@ def encode(string):
 
 """
 Metodo no qual realiza a decodificao de cada par de hexa, retorna 
-a messagem decodificada e os erros encontrados.
+a mensagem decodificada e os erros encontrados.
 """
 def decode(string):
     # converter cada letra para binario
