@@ -4,7 +4,6 @@ Autores: Vinicius Cerutti e Yuri Bittencourt
 Trabalho de Introdução a Redes de Computadores 2019/1
 """
 
-
 import sys
 import utils
 

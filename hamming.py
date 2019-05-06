@@ -85,6 +85,7 @@ def decode_calc_hamming(binary):
     for i in list(__range_power2__(len(bin_inv)))[::-1]:
         bin_inv.pop(i)
     binary = "".join(bin_inv[::-1])
+    
     return (utils.bin_to_ascii(binary), index_error)
     
 
@@ -95,11 +96,8 @@ retorna uma string em hexa com a codificacao.
 def encode(string):
     # converter cada letra para binario
     bin_list = [utils.char_to_bin(letter, 8) for letter in string]
-    message_encode = ""
-    for binary in bin_list:
-        # de cada binario realizar o hamming
-        message_encode += encode_calc_hamming(binary)
-
+    # de cada binario realizar o hamming
+    message_encode = "".join(list(map(encode_calc_hamming,bin_list)))
     return message_encode.upper()
 
 """
@@ -121,9 +119,9 @@ def decode(string):
     return {'message':message, 'erros': erros}
 
 if __name__ == '__main__':
+
     # se o usuario executar python hamming.py -e string,executa o 
     # encode dessa string
-
     if sys.argv[1] == '-e':
         string = " ".join(sys.argv[2:])
         print(encode(string))
