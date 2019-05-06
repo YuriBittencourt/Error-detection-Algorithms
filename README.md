@@ -9,7 +9,7 @@ Python 3.6.5 :: Anaconda, Inc.
   ### Codificador: 
     <string em ASCII> => <string codificada em hexadecimal>  
     
-O Codificador recebe uma string em ASCII e trata as caracteres (cada uma possui 7 bits) como um array bidimensional, um bit de paridade é adicionado ao final de cada caractere (assim cada caractere fica com 8 bits), após são calculados bit de paridades para cada "coluna", isto é, paridade do n-ésimo bit de cada caractere, formando assim o bloco que vai ser enviado junto com a mensagem, tudo convertido em hexadecimal.
+O Codificador recebe uma string em ASCII e trata os caracteres (cada um possui 7 bits) como um array bidimensional, um bit de paridade é adicionado ao final de cada caractere (assim cada caractere fica com 8 bits), após são calculados bit de paridades para cada "coluna", isto é, paridade do n-ésimo bit de cada caractere, formando assim o bloco que vai ser enviado junto com a mensagem, tudo convertido em hexadecimal.
 
   ![BCC](https://user-images.githubusercontent.com/28678662/57202921-5cce5080-6f81-11e9-9e04-58f872b9dbcc.png)
 
@@ -25,8 +25,8 @@ O Codificador recebe uma string em ASCII e trata as caracteres (cada uma possui 
   ```
   ### Decodificador: 
     <código em hexadecimal> => <string em ASCII> ou "ERRO"
- A decodificação consiste em converter o código hexadecimal para binário, cada par de hexadecimais é um caractere mais 1 bit de paridade, a primeira verificação é se a paridade desses 7 bits da caractere é igual ao 8º bit que é a paridade, caso seja diferente, retorna ERRO, isso é verificado em todas os caracteres. A segunda verificação é feita nas "colunas", separando o último bloco que é aquele calculado na codificação, verificamos se a paridade dos n-ésimos bits de cada caractere da mensagem é igual ao n-ésimo bit desse bloco, se algum for diferente retorna ERRO.
- Após a verificação, é  realizado a conversão dos binários para ASCII sendo que cada bloco de bits desconsidera-se o último bit, que é a paridade e não o caractere, para conversão, o último bloco não é convertido pois esse é o BCC, o bloco que contém as paridades das colunas.
+ A decodificação consiste em converter o código hexadecimal para binário. Cada par de hexadecimais é um caractere mais 1 bit de paridade, a primeira verificação é se a paridade desses 7 bits do caractere é igual ao 8º bit que é a paridade, caso seja diferente, retorna ERRO, isso é verificado em todas os caracteres. A segunda verificação é feita nas "colunas", separando o último bloco que é aquele calculado na codificação, verificamos se a paridade dos n-ésimos bits de cada caractere da mensagem é igual ao n-ésimo bit desse bloco, se algum for diferente retorna ERRO.
+ Após a verificação, é  realizado a conversão dos binários para ASCII sendo que cada bloco de bits desconsidera-se o último bit, que é a paridade e não o caractere, para conversão, o último bloco não é convertido, pois esse é o BCC, o bloco que contém as paridades das colunas.
   
   #### Exemplo:
   ```
@@ -46,7 +46,7 @@ O Codificador recebe uma string em ASCII e trata as caracteres (cada uma possui 
   ### Codificador: 
     <string em ASCII> <polinômio gerador de ordem 5 expresso em binário> => <string codificada em hexadecimal>
     
-O Codificador consiste em receber uma string em ASCII e para cada elemento desta string é realizado a codificação em binário com 12 bits. Logo após isso, para cada binário é executada a codificação onde: realiza-se divisões sucessivas do binário em que se o primeiro bit do binário for igual a 1  então a divisão deve ser realizada através do polinômio, caso contrário, através do binário 0 e assim sucessivamente, no final é adicionado este resultado no lugar dos últimos 4 bits do binário inicial e logo após isso, este binário é convertido para hexadecimal.
+O Codificador consiste em receber uma string em ASCII e para cada elemento desta string é realizado a conversão em binário com 11 bits. Logo após isso, para cada binário é executada a codificação onde: realiza-se divisões sucessivas do binário em que se o primeiro bit do binário for igual a 1  então a divisão deve ser realizada através do polinômio, caso contrário, através do binário 0 e assim sucessivamente, no final é adicionado este resultado no lugar dos últimos 4 bits do binário inicial e logo após isso, este binário é convertido para hexadecimal.
   
   ![codificacao_crc](https://user-images.githubusercontent.com/21231029/57184960-fb7f8200-6e99-11e9-9ff4-2f8f7ecb3ee2.png)
    
