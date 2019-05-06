@@ -108,15 +108,15 @@ def decode(string):
     # converter cada letra para binario
     bin_list = [utils.hex_to_bin(string[i:i+3], 11) for i in range(0,len(string),3) ]
     message = ""
-    erros = []
-    for binary in bin_list:
+    index_error = []
+    for i, binary in enumerate(bin_list):
         #decodifca o binario
         letter, error = decode_calc_hamming(binary)
         message+=letter
         if error != 0:
-            erros.append((letter,error))
+            index_error.append((letter,i+1))
 
-    return {'message':message, 'erros': erros}
+    return {'message':message, 'index_error': index_error}
 
 if __name__ == '__main__':
 
@@ -131,5 +131,5 @@ if __name__ == '__main__':
     if sys.argv[1] == '-d':
         dec = decode(sys.argv[2])
         print(dec['message'])
-        for letter, error in dec['erros']:
-            print("ERRO no caractere {} -> Correção: {}".format(dec['message'].index(letter)+1,letter))
+        for letter, error in dec['index_error']:
+            print("ERRO no caractere {} -> Correção: {}".format(error,letter))
