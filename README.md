@@ -11,7 +11,8 @@ Python 3.6.5 :: Anaconda, Inc.
     
 O Codificador recebe uma string em ASCII e trata as caracteres (cada uma possui 7 bits) como um array bidimensional, um bit de paridade é adicionado ao final de cada caractere (assim cada caractere fica com 8 bits), após são calculados bit de paridades para cada "coluna", isto é, paridade do n-ésimo bit de cada caractere, formando assim o bloco que vai ser enviado junto com a mensagem, tudo convertido em hexadecimal.
 
-  ![bcc](https://user-images.githubusercontent.com/28678662/57196724-e5bf9a80-6f35-11e9-923d-0a9483dad5dc.png)
+  ![BCC](https://user-images.githubusercontent.com/28678662/57202921-5cce5080-6f81-11e9-9e04-58f872b9dbcc.png)
+
 
   #### Exemplo:
   ```
