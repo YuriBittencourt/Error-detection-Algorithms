@@ -39,11 +39,14 @@ a 1 e assim se coloca este bit's gerados nas posicoes de potencia 2, no final
 retorna o binario com estes novos bit's.
 """
 def encode_calc_hamming(binary):
+
     # inverte o binario
     bin_inv = list(binary[::-1])
+    print(bin_inv)
     # para cada elemento 2^1 colocar 0
-    for i in range(len(bin_inv)):
-        bin_inv.insert((2**i)-1,"0")
+    for i in __range_power2__(len(bin_inv)):
+        bin_inv.insert(i,"0")
+    print(bin_inv)
     # pegar os indices que possuem 1
     index_list = __get_index_elemt_equals_one__(bin_inv)
     # pega as colunas de bits
@@ -95,7 +98,7 @@ retorna uma string em hexa com a codificacao.
 """
 def encode(string):
     # converter cada letra para binario
-    bin_list = [utils.char_to_bin(letter, 8) for letter in string]
+    bin_list = [utils.char_to_bin(letter, 7) for letter in string]
     # de cada binario realizar o hamming
     message_encode = "".join(list(map(encode_calc_hamming,bin_list)))
     return message_encode.upper()
