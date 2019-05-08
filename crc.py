@@ -62,7 +62,7 @@ def decode(text, polynomial):
          # se o resultado for igual a zero pega o binario descontando os 
          # ultimos 4 bits (o ultimo hexadecimal e converte para ASCII)
         if utils.bin_to_int(calculate_crc(bin_list[i], polynomial)) == 0:
-            mensagem += utils.bin_to_ascii(bin_list[i][:-4])
+            mensagem += utils.bin_to_ascii(bin_list[i][:-(len(polynomial)-1)])
 
         # se o resultado for diferente de 0, logo tem erro e deve ser 
         # guardada a posicao.
