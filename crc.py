@@ -34,14 +34,16 @@ def calculate_crc(binary, polynomial):
         else:
             result = result[1:]
 
-        if i < len(binary): # necessario para realizar mais um passo da divisao.
-                            # pois iria dar indice fora do alcance
+        if i < len(binary):
+            # necessario para realizar mais um passo da divisao.
+            # pois iria dar indice fora do alcance
             result = result + binary[i]
 
         # avanca para o proximo bit a ser deslocado para baixo
         i += 1
 
     return result
+
 
 """
 Metodo no qual realiza a decodificao de cada trio de hexadecimais, retorna 
@@ -58,9 +60,9 @@ def decode(text, polynomial):
     erros = []
 
     # Calcular o CRC de cada caractere
-    for i in range(0,len(bin_list)):
-         # se o resultado for igual a zero pega o binario descontando os 
-         # ultimos 4 bits (o ultimo hexadecimal e converte para ASCII)
+    for i in range(0, len(bin_list)):
+        # se o resultado for igual a zero pega o binario descontando os
+        # ultimos 4 bits (o ultimo hexadecimal e converte para ASCII)
         if utils.bin_to_int(calculate_crc(bin_list[i], polynomial)) == 0:
             mensagem += utils.bin_to_ascii(bin_list[i][:-(len(polynomial)-1)])
 

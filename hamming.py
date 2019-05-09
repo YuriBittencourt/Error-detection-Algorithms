@@ -1,7 +1,9 @@
+# coding: utf-8
 """
 Autores: Vinicius Cerutti e Yuri Bittencourt
 Trabalho de Introdução a Redes de Computadores 2019/1
 """
+
 import utils
 import sys
 
@@ -16,7 +18,8 @@ def __range_power2__(n):
     i = 0
     while (2**i)-1 <= n:
         yield (2**i)-1
-        i+=1 
+        i += 1
+
 
 """
 Metodo que retorna uma lista com indices dos elementos 
@@ -24,9 +27,9 @@ que possuem valores iguais a 1
 """
 def __get_index_elemt_equals_one__(binary):
     index_list = []
-    for i in range (len(binary)):
+    for i in range(len(binary)):
         if binary[i] == "1":
-            index_list.append(utils.int_to_bin(i+1,4))
+            index_list.append(utils.int_to_bin(i+1, 4))
 
     return index_list
 
@@ -45,7 +48,7 @@ def encode_calc_hamming(binary):
     print(bin_inv)
     # para cada elemento 2^1 colocar 0
     for i in __range_power2__(len(bin_inv)):
-        bin_inv.insert(i,"0")
+        bin_inv.insert(i, "0")
     print(bin_inv)
     # pegar os indices que possuem 1
     index_list = __get_index_elemt_equals_one__(bin_inv)
@@ -64,7 +67,7 @@ def encode_calc_hamming(binary):
     
 """
 Metodo que realiza o calculo de decodificacao de hamming
-ou seja recebe um sequencia binária, inverte para ter os indices
+ou seja recebe uma sequencia binária, inverte para ter os indices
 corretos do algoritmo (0...n). Realiza-se o xor (paridade) dos indices que 
 possuem valor igual a 1 e se este valor gerado for diferente de zero entao
 ha bit errado, realiza-se a troca deste bit, remove os bit's dos indices que
@@ -81,15 +84,15 @@ def decode_calc_hamming(binary):
     xor_list = list(map(utils.parity,xor_list))
     # indice errado
     index_error = utils.bin_to_int("".join(xor_list))
-    #trocando o bit errado
+    # trocando o bit errado
     if index_error != 0:
         bin_inv[index_error-1] = '1' if bin_inv[index_error-1] == '0' else '0'
-    #remove os bits adicionais
+    # remove os bits adicionais
     for i in list(__range_power2__(len(bin_inv)))[::-1]:
         bin_inv.pop(i)
     binary = "".join(bin_inv[::-1])
     
-    return (utils.bin_to_ascii(binary), index_error)
+    return utils.bin_to_ascii(binary), index_error
     
 
 """
@@ -100,8 +103,9 @@ def encode(string):
     # converter cada letra para binario
     bin_list = [utils.char_to_bin(letter, 7) for letter in string]
     # de cada binario realizar o hamming
-    message_encode = "".join(list(map(encode_calc_hamming,bin_list)))
+    message_encode = "".join(list(map(encode_calc_hamming, bin_list)))
     return message_encode.upper()
+
 
 """
 Metodo no qual realiza a decodificao de cada par de hexa, retorna 
@@ -109,17 +113,18 @@ a mensagem decodificada e os erros encontrados com a correcao.
 """
 def decode(string):
     # converter cada letra para binario
-    bin_list = [utils.hex_to_bin(string[i:i+3], 11) for i in range(0,len(string),3) ]
+    bin_list = [utils.hex_to_bin(string[i:i+3], 11) for i in range(0, len(string), 3)]
     message = ""
     index_error = []
     for i, binary in enumerate(bin_list):
-        #decodifca o binario
+        # decodifca o binario
         letter, error = decode_calc_hamming(binary)
-        message+=letter
+        message += letter
         if error != 0:
-            index_error.append((letter,i+1))
+            index_error.append((letter, i+1))
 
-    return {'message':message, 'index_error': index_error}
+    return {'message': message, 'index_error': index_error}
+
 
 if __name__ == '__main__':
 
@@ -135,4 +140,4 @@ if __name__ == '__main__':
         dec = decode(sys.argv[2])
         print(dec['message'])
         for letter, error in dec['index_error']:
-            print("ERRO no caractere {} -> Correção: {}".format(error,letter))
+            print("ERRO no caractere {} -> Correção: {}".format(error, letter))
